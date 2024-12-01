@@ -18,12 +18,14 @@ public class QuizzModule {
     private List<Quiz> quizzes;
     private int currentQuestionIndex;
     private int timeRemaining;
+    private int score;
     private Timer timer;
       
     public QuizzModule(ArrayList<Quiz> quizzes) {
         this.quizzes = quizzes;
         this.currentQuestionIndex = 0;
-        this.timeRemaining = 10;
+        this.score = 0; 
+        this.timeRemaining = 20;
     }
 
     // Returns the current quiz
@@ -31,19 +33,41 @@ public class QuizzModule {
         return quizzes.get(currentQuestionIndex);
     }
 
-    // Checks for answer if is correct
-    public boolean checkAnswer(int answerIndex) {
-        return quizzes.get(currentQuestionIndex).getCorrectAnswerIndex() == answerIndex;
+    public boolean checkAnswer(int selectedAnswer) {
+        if (currentQuestionIndex >= quizzes.size()) {
+            System.out.println("Invalid question index: " + currentQuestionIndex);
+            return false; // Prevent out-of-bounds access
+        }
+        return quizzes.get(currentQuestionIndex).getCorrectAnswerIndex() == selectedAnswer;
     }
 
     // Moves to the next question 
     public void moveToNextQuestion() {
-        currentQuestionIndex++;
+        if (hasNextQuestion()) {
+            currentQuestionIndex++;
+            System.out.println("Moved to Question Index: " + currentQuestionIndex + " / " + quizzes.size());
+
+        }
+    }
+    
+    public boolean hasNextQuestion() {
+        return currentQuestionIndex < quizzes.size(); // Allow the last question to be shown
+    }
+    
+    // Resets the current question index
+    public void resetQuiz() {
+        currentQuestionIndex = 0;
+        score = 0; // Reset the score
     }
 
-    // Checks for more questions in the quiz
-    public boolean hasNextQuestion() {
-        return currentQuestionIndex < quizzes.size();
+    
+    public void incrementScore() {
+        score++;
+    }
+    
+    // Getter
+    public int getScore() {
+        return score;
     }
 
     // Getter for the current question 
@@ -84,16 +108,19 @@ public class QuizzModule {
         return availableQuizzes;
     }
 
-        public Result displayQuiz(int quizID) {
+    public Result displayQuiz(int quizID) {
         // this function is Display the quiz and calculate a result
         int score = 0; // Example score
         int totalQuestions = quizzes.size(); // Quizzes is the list of questions
-        
-
+    
         // Display the quiz or calculate results as needed
         return new Result(score, totalQuestions);
     }
     
+    public int getTotalQuestions() {
+        return quizzes.size();
+    }    
+        
     // Updates the quiz 
     public void updateQuiz() {
         // Implementation to update quiz
@@ -104,4 +131,6 @@ public class QuizzModule {
         System.out.println("Submitted answer: " + answer);
        
     }
+    
+    
 }

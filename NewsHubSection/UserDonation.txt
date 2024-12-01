@@ -1,1 +1,6 @@
-Name: dfsd, Phone: sdfsdf, Email: sdfsdf, Amount: €234.0, NGO: Doctors Without Borders
+Name: adsfdasfsdf, Phone: sdfsdfdf, Email: sdfsdf, Amount: €12323.0, NGO: Doctors Without Borders
+Name: qwewqewq, Phone: qweqwe, Email: qweqwe, Amount: €123.0, NGO: Doctors Without Borders
+Name: Andrei Retsja, Phone: 123123131233, Email: Aretsja@gmail.com, Amount: €123.0, NGO: World Wildlife Fund
+Name: Andrei Retsja, Phone: 12312312323, Email: aretsja@gmail.com, Amount: €125.0, NGO: Doctors Without Borders
+Name: adsad, Phone: asdas, Email: asdsad, Amount: €231234.0, NGO: Save the Children
+Name: asdasd, Phone: asdasdsad, Email: asdasd, Amount: €123.0, NGO: UNICEF

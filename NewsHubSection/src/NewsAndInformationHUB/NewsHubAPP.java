@@ -5,7 +5,9 @@
 package NewsAndInformationHUB;
 
 /**
- *
+ * This is main class for the News and Information Hub application.
+ * It launches the main application frame.
+ * 
  * @author arets
  */
 public class NewsHubAPP {

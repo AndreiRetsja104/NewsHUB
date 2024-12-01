@@ -15,7 +15,7 @@ import javax.swing.JTabbedPane;
 
 public class NewsFeedGUI extends javax.swing.JInternalFrame {
     private JTabbedPane mainFrame;
-    private JList<String> articleJL, shortsJL;
+    private JList<String> articleJL; // Displaying articles
     private NewsFeed newsFeed;
 
     /**
@@ -28,6 +28,7 @@ public class NewsFeedGUI extends javax.swing.JInternalFrame {
         refreshContent();
     }
 
+    // Constructor with a NewsFeed object.
     public NewsFeedGUI(NewsFeed newsFeed) {
         this.newsFeed = newsFeed;
         initComponents();
@@ -36,75 +37,91 @@ public class NewsFeedGUI extends javax.swing.JInternalFrame {
     }
 
     private void setupTabs() {
-        mainFrame = new JTabbedPane();
+        mainFrame = new JTabbedPane(); // Create a tabbed pane
 
-        // Initialize each JList
+         // Initialize JLists for articles, videos, and research
         articleJL = new JList<>();
         videoJL = new JList<>();
-        researchJL = new JList<>();
-        shortsJL = new JList<>();
+      //researchJL = new JList<>();
 
         // Add each JList in a JScrollPane directly to mainFrame only once
         mainFrame.addTab("Article List", new JScrollPane(articleJL));
         mainFrame.addTab("Video List", new JScrollPane(videoJL));
-        mainFrame.addTab("Research List", new JScrollPane(researchJL));
-        mainFrame.addTab("Shorts List", new JScrollPane(shortsJL));
+      //mainFrame.addTab("Research List", new JScrollPane(researchJL));
 
         // Set layout and add main frame to GUI
         setLayout(new BorderLayout());
         add(mainFrame, BorderLayout.CENTER);
     }
 
+    
+    
+    // Displays articles in the article list.
     public void displayArticles(List<String> articles) {
-        articleJL.setListData(articles.toArray(new String[0]));
+        articleJL.setListData(articles.toArray(new String[0])); // Populate the article list
     }
-
+    
+    // Displays Video in the article list.
     public void displayVideos(List<String> videos) {
-        videoJL.setListData(videos.toArray(new String[0]));
+        videoJL.setListData(videos.toArray(new String[0])); // Populate the video list
     }
+    
+   // In the progress  
+   // Displays research in the article list.
+   // public void displayResearch(List<String> research) {
+   //     researchJL.setListData(research.toArray(new String[0])); // Populate the research list
+   // }
 
-    public void displayShorts(List<String> shorts) {
-        shortsJL.setListData(shorts.toArray(new String[0]));
+    // efreshes the content in all tabs by fetching data from NewsFeed.
+    public void refreshContent() {
+    List<Article> articles = newsFeed.getLatestArticles();
+    List<String> articleTitles = new ArrayList<>();
+    for (Article article : articles) {
+        articleTitles.add(article.getTitle()); // Use article titles for display
     }
+    displayArticles(articleTitles);
 
-    public void displayResearch(List<String> research) {
-        researchJL.setListData(research.toArray(new String[0]));
-    }
-
-public void refreshContent() {
-    List<String> articles = newsFeed.getLatestArticles();
-    displayArticles(articles);
-
-    List<String> videos = newsFeed.getLatestVideos();
-    displayVideos(videos);
-
-    List<ShortVideo> shorts = newsFeed.getLatestShorts();
+    List<Video> videos = newsFeed.getLatestVideos();
     List<String> shortTitles = new ArrayList<>();
-    for (ShortVideo video : shorts) {
-        shortTitles.add(video.getTitle()); // Add each video title to the display list
+    for (Video video : videos) {
+        shortTitles.add(video.getTitle());  // Add video titles to the display list
     }
-    displayShorts(shortTitles);
+    displayVideos(shortTitles);
+  
+   // Fetch and display research papers
+   // List<String> research = newsFeed.getLatestResearch();
+   // displayResearch(research);
 
-    List<String> research = newsFeed.getLatestResearch();
-    displayResearch(research);
-
-    // Add a mouse listener to open URLs when clicking on items in shortsJL
-    shortsJL.addMouseListener(new java.awt.event.MouseAdapter() {
+    // Add a mouse listener to open URLs for videos
+    videoJL.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
-            int index = shortsJL.locationToIndex(evt.getPoint());
-            if (index >= 0 && index < shorts.size()) {
-                ShortVideo selectedVideo = shorts.get(index);
-                openLinkInBrowser(selectedVideo.getUrl()); // Open the selected video's URL
+            int index = videoJL.locationToIndex(evt.getPoint());
+            if (index >= 0 && index < videos.size()) {
+                Video selectedVideo = videos.get(index);
+                openLinkInBrowser(selectedVideo.getUrl());
             }
         }
     });
-    } 
+
+    // Add a mouse listener to open URLs for articles
+    articleJL.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int index = articleJL.locationToIndex(evt.getPoint());
+            if (index >= 0 && index < articles.size()) {
+                Article selectedArticle = articles.get(index);
+                openLinkInBrowser(selectedArticle.getUrl());  // Open article link in the browser
+            }
+        }
+    });
+    }
+    
+    //  Opens a URL in the default web browser.
     private void openLinkInBrowser(String url) {
     try {
         Desktop desktop = Desktop.getDesktop();
-        desktop.browse(new URI(url));
+        desktop.browse(new URI(url)); // Open the given URL
     } catch (Exception e) {
-        e.printStackTrace();
+        e.printStackTrace(); // Print error details if the URL can't be opened
         }
     }
       
@@ -134,33 +151,18 @@ public void refreshContent() {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(840, 540));
 
-        videoJL.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         ScrollPane1.setViewportView(videoJL);
 
         videoListTab.addTab("tab1", ScrollPane1);
 
         MainFrame.addTab("VideoList", videoListTab);
 
-        researchJL.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         ScrollPane2.setViewportView(researchJL);
 
         researchListTab.addTab("tab1", ScrollPane2);
 
         MainFrame.addTab("ResearchList", researchListTab);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         ScrollPane3.setViewportView(jList1);
 
         articleListTab.addTab("tab1", ScrollPane3);

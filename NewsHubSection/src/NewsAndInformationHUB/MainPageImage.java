@@ -11,6 +11,7 @@ package NewsAndInformationHUB;
 public class MainPageImage extends javax.swing.JInternalFrame {
 
     /**
+     *  
      * Creates new form MainPageImage
      */
     public MainPageImage() {
@@ -39,9 +40,9 @@ public class MainPageImage extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titleLBL.setBackground(new java.awt.Color(255, 255, 0));
-        titleLBL.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        titleLBL.setText("This page is the main page [here you can use ProfileDetailsGUI to control the main frame]");
-        jPanel1.add(titleLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 790, -1));
+        titleLBL.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        titleLBL.setText("The Main Page ");
+        jPanel1.add(titleLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 180, 40));
 
         mainPageImageLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/MainPAge_Background.jpg"))); // NOI18N
         mainPageImageLBL.setVerticalAlignment(javax.swing.SwingConstants.TOP);

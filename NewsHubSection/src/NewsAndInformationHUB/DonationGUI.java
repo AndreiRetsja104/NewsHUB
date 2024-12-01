@@ -17,49 +17,52 @@ import javax.swing.JOptionPane;
 
 
 /**
- *
+ * DonationGUI class provides a graphical user interface for managing donations.
+ * Here user can leave his application for Donation, the Details will saved in the main/src folder in UserDetails.txt. 
+ * For this project I didn't connect to the real donation form.  
  * @author arets
  */
 public class DonationGUI extends javax.swing.JInternalFrame {
-    private String selectedNGO = ""; 
-    private JList<String> ngoList;
-    private NGOList ngoListData;
-    private Donation donation;
+    private String selectedNGO = ""; // Stores the selected NGO
+    private JList<String> ngoList; 
+    private NGOList ngoListData; // The data list of NGOs
+    private Donation donation; // Donation object for managing data
     
     /**
      * Creates new form DonationGUI
      */
 
     public DonationGUI() {
-        this.donation = new Donation();
-        this.ngoListData = new NGOList();
+        this.donation = new Donation(); // Initialize Donation object
+        this.ngoListData = new NGOList(); // Initialize NGOList object
         initComponents();
-        initializeNGOList();
+        initializeNGOList(); // Populate NGO list
     }
 
-    private void initializeNGOList() {
+    //Initializes the NGO list with data and sets
+    private void initializeNGOList() { 
         DefaultListModel<String> model = new DefaultListModel<>();
-        List<String> ngos = ngoListData.getNgoList();
+        List<String> ngos = ngoListData.getNgoList(); // Fetch NGO list
 
         for (String ngo : ngos) {
-            model.addElement(ngo);
+            model.addElement(ngo); // Add each NGO to the list model
         }
 
-        displayNGOTAJL.setModel(model);
+        displayNGOTAJL.setModel(model); // Set the list model
         displayNGOTAJL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
         private void saveToFile(String name, String phone, String email, float amount, String ngo) {
-        String fileName = "UserDonation.txt";
+        String fileName = "UserDonation.txt"; // File name to save donation details
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write("Name: " + name + ", ");
             writer.write("Phone: " + phone + ", ");
             writer.write("Email: " + email + ", ");
             writer.write("Amount: €" + amount + ", ");
             writer.write("NGO: " + ngo);
-            writer.newLine(); // Move to the next line
+            writer.newLine(); // Add a new line for the next entry
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error saving donation details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error saving donation details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);  // Error message 
         }
     }
     
@@ -86,7 +89,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
         exitBTN = new javax.swing.JToggleButton();
         submitDonationBTN = new javax.swing.JToggleButton();
         confirmDonationBTN = new javax.swing.JButton();
-        chooseNGOBTN = new javax.swing.JButton();
+        confirmNgoBTN = new javax.swing.JButton();
         ScrollPane1 = new javax.swing.JScrollPane();
         displayTA = new javax.swing.JTextArea();
         ScrollPane2 = new javax.swing.JScrollPane();
@@ -114,6 +117,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
         headerLBL.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         headerLBL.setText("                             Donation Form ");
 
+        exitBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         exitBTN.setText("Exit");
         exitBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +125,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
             }
         });
 
+        submitDonationBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         submitDonationBTN.setText("Submite");
         submitDonationBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +133,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
             }
         });
 
+        confirmDonationBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         confirmDonationBTN.setText("Confirm");
         confirmDonationBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,10 +141,11 @@ public class DonationGUI extends javax.swing.JInternalFrame {
             }
         });
 
-        chooseNGOBTN.setText("ChoosNGO");
-        chooseNGOBTN.addActionListener(new java.awt.event.ActionListener() {
+        confirmNgoBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        confirmNgoBTN.setText("Confirm NGO");
+        confirmNgoBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseNGOBTNActionPerformed(evt);
+                confirmNgoBTNActionPerformed(evt);
             }
         });
 
@@ -155,7 +162,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(182, 182, 182)
                 .addComponent(headerLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,31 +172,28 @@ public class DonationGUI extends javax.swing.JInternalFrame {
                             .addComponent(phoneLBL)
                             .addComponent(emailLBL)
                             .addComponent(nameLBL))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(phoneTF, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(donationTF, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chooseNGOBTN)
+                            .addComponent(confirmNgoBTN)
                             .addComponent(submitDonationBTN)))
                     .addComponent(ScrollPane1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(ScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(387, 387, 387)
-                            .addComponent(exitBTN)
-                            .addGap(65, 65, 65))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(127, 127, 127)
-                            .addComponent(confirmationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(confirmDonationBTN)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(confirmationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(confirmDonationBTN)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitBTN)
+                        .addGap(59, 59, 59))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +202,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(chooseNGOBTN)
+                        .addComponent(confirmNgoBTN)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,19 +222,14 @@ public class DonationGUI extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(submitDonationBTN))
                     .addComponent(ScrollPane2))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(exitBTN)
-                        .addGap(45, 45, 45))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(confirmationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(confirmDonationBTN))
-                            .addComponent(ScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28))))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(confirmationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(confirmDonationBTN)
+                        .addComponent(exitBTN))
+                    .addComponent(ScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -247,22 +246,22 @@ public class DonationGUI extends javax.swing.JInternalFrame {
 
     private void submitDonationBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitDonationBTNActionPerformed
     // TODO add your handling code here:
-        if (selectedNGO.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please choose an NGO first.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (selectedNGO.isEmpty()) {   // Check if an NGO is selected
+            JOptionPane.showMessageDialog(this, "Please choose an NGO first.\nThen press Button Confirm NGO"  , "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        // Get User name, phone ,email
         String name = nameTF.getText();
         String phone = phoneTF.getText();
         String email = emailTF.getText();
         float amount;
         try {
-            amount = Float.parseFloat(donationTF.getText());
+            amount = Float.parseFloat(donationTF.getText());  // Parse donation amount
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid donation amount.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+         // Display donation details in the display area
         displayTA.append("Donation submitted successfully!\n");
         displayTA.append("To: " + selectedNGO + "\n");
         displayTA.append("Name: " + name + "\n");
@@ -274,7 +273,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
 
     private void confirmDonationBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmDonationBTNActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Donation confirmed. Thank you!");
+        JOptionPane.showMessageDialog(this, "Thank you for your application !\nWe will send the donation details to your email!\nDonation details was saved in UserDonation.txt file In the src folder.");
 
         // Save details to file
         String name = nameTF.getText();
@@ -288,7 +287,7 @@ public class DonationGUI extends javax.swing.JInternalFrame {
             return;
         }
 
-        saveToFile(name, phone, email, amount, selectedNGO);
+        saveToFile(name, phone, email, amount, selectedNGO);  // Save details to file UserDiteils.txt
 
         // Clear fields
         nameTF.setText("");
@@ -300,15 +299,15 @@ public class DonationGUI extends javax.swing.JInternalFrame {
     
     }//GEN-LAST:event_confirmDonationBTNActionPerformed
 
-    private void chooseNGOBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseNGOBTNActionPerformed
+    private void confirmNgoBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmNgoBTNActionPerformed
         // TODO add your handling code here:
     if (displayNGOTAJL.getSelectedValue() != null) {
-        selectedNGO = displayNGOTAJL.getSelectedValue();
-        JOptionPane.showMessageDialog(this, "Selected NGO: " + selectedNGO);
-    } else {
+        selectedNGO = displayNGOTAJL.getSelectedValue();  // Get selected NGO
+        JOptionPane.showMessageDialog(this, "Selected NGO: " + selectedNGO); // Display selected NGO
+    } else { 
         JOptionPane.showMessageDialog(this, "Please select an NGO.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_chooseNGOBTNActionPerformed
+    }//GEN-LAST:event_confirmNgoBTNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,8 +326,8 @@ public class DonationGUI extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollPane1;
     private javax.swing.JScrollPane ScrollPane2;
-    private javax.swing.JButton chooseNGOBTN;
     private javax.swing.JButton confirmDonationBTN;
+    private javax.swing.JButton confirmNgoBTN;
     private javax.swing.JLabel confirmationLBL;
     private javax.swing.JList<String> displayNGOTAJL;
     private javax.swing.JTextArea displayTA;

@@ -16,6 +16,7 @@ public class Quiz {
     private ArrayList<String> options;
     private int correctAnswerIndex;
 
+    // Constructor 
     public Quiz(String questionText, ArrayList<String> options, int correctAnswerIndex) {
         this.questionText = questionText;
         this.options = options;

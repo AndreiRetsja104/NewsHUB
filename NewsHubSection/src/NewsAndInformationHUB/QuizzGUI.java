@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * I'm still need to work a little bit with this class , 
- * need to more organize things around , and think with end logik of quiz  
+ * This class represents the Quiz GUI for the News and Information Hub.
+ * It contains the functionality for starting, answering, and ending a quiz.
  *  
  * @author arets
  */
@@ -22,7 +22,7 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
     private int timeRemaining;
     
     
-    // Constructor 
+    // Constructor for QuizzGUI.
     public QuizzGUI() {
         initComponents();
         setupQuizModule();  
@@ -34,31 +34,56 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
     private void setupQuizModule() {
         ArrayList<Quiz> quizzes = new ArrayList<>();
 
-    // I wan't create minimum 10 quastions     
-    // Quiz 1: Basic Concepts of Climate Change
+    // 10 quastions with the marks      
+    // Sample quiz questions with options and correct answers.
     quizzes.add(new Quiz("What is the main greenhouse gas responsible for global warming?", 
                          new ArrayList<>(List.of("Oxygen", "Carbon Dioxide", "Nitrogen", "Argon", "Methane", "Water Vapor")), 1));
+    
     quizzes.add(new Quiz("Which layer of the Earth’s atmosphere contains the ozone layer?", 
                          new ArrayList<>(List.of("Troposphere", "Stratosphere", "Mesosphere", "Thermosphere", "Exosphere", "Magnetosphere")), 1));
+    
     quizzes.add(new Quiz("What is the primary cause of recent climate change?", 
                          new ArrayList<>(List.of("Natural cycles", "Solar activity", "Human activities", "Volcanic eruptions", "Deforestation", "Ocean currents")), 2));
- 
     
+    quizzes.add(new Quiz("What percentage of the Earth's water is freshwater?", 
+                     new ArrayList<>(List.of("1%", "2.5%", "10%", "50%", "70%", "97%")), 1));
+
+    quizzes.add(new Quiz("Which renewable energy source uses the Earth's internal heat?", 
+                         new ArrayList<>(List.of("Solar", "Wind", "Geothermal", "Hydropower", "Biomass", "Tidal")), 2));
+
+    quizzes.add(new Quiz("What is the largest contributor to deforestation?", 
+                         new ArrayList<>(List.of("Urbanization", "Cattle ranching", "Logging", "Wildfires", "Mining", "Agriculture")), 1));
+
+    quizzes.add(new Quiz("What is the main function of the ozone layer?", 
+                         new ArrayList<>(List.of("Absorb carbon dioxide", "Reflect sunlight", "Protect from UV radiation", "Trap heat", "Provide oxygen", "Regulate temperature")), 2));
+
+    quizzes.add(new Quiz("Which country is the largest producer of solar energy?", 
+                         new ArrayList<>(List.of("India", "USA", "Germany", "China", "Australia", "Spain")), 3));
+
+    quizzes.add(new Quiz("Which process is responsible for the majority of oxygen production on Earth?", 
+                         new ArrayList<>(List.of("Rainforests", "Phytoplankton photosynthesis", "Volcanic eruptions", "Ocean currents", "Wind erosion", "Desertification")), 1));
+
+    quizzes.add(new Quiz("What is the primary effect of melting polar ice caps?", 
+                         new ArrayList<>(List.of("Ocean levels drop", "Ocean levels rise", "Global cooling", "Oxygen levels drop", "Increased salinity", "Stronger storms")), 1));
+
     
+        System.out.println("Total Questions Added: " + quizzes.size());             
         quizModule = new QuizzModule(quizzes); // Initialize with the list of quizzes
-        timeRemaining = 10; // Timer for 10 seconds
-        resetQuiz();
+        timeRemaining = 20; // Timer for 20 seconds 
+        resetQuiz(); // Resets the quiz to the initial state.
     }
+    
+    // Sets up action listeners for the quiz buttons.
     private void setupActionListeners() {
         startQuizBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateQuestion();                             ////>>>>Update the question when starting the quiz <<<<<<<<<<
-                submitAnswerBTN.setEnabled(true);
-                startQuizBTN.setEnabled(false);
+                submitAnswerBTN.setEnabled(true); // Enables the "Submit Answer" button.
+                startQuizBTN.setEnabled(false);   // Disables the "Start Quiz" button
             }
         });
-
+            // Action listener for the "Submit Answer" button.
         submitAnswerBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +92,8 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
         });
 
     }
-
+    
+    // Resets the quiz to its initial state.
     private void resetQuiz() {
         quizModule.moveToNextQuestion();
         scoreLBL.setText("Score: 0"); //Reset the score 
@@ -76,85 +102,116 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
         resetSelections();
     }
 
+    // Updates the current question being displayed
     private void updateQuestion() {
-        if (quizModule.hasNextQuestion()) {       //<<<<<< It is check if there has more questions
-            Quiz currentQuiz = quizModule.getCurrentQuiz();
-            quizTitleLBL.setText("Quiz Title: General Knowledge");
-            questionLBL.setText(currentQuiz.getQuestionText()); //<>>>>  Set Question text <<<<<<<< 
-            
-             //<<<<<<<<<<<<<<< Display answer options in labels 1 2 3 4 5 6
-            question1LBL.setText(currentQuiz.getOptions().get(0));
+        if (quizModule.hasNextQuestion()) { // Checks if there are more questions.
+            Quiz currentQuiz = quizModule.getCurrentQuiz(); // Gets the current quiz question.
+            System.out.println("Displaying Question: " + currentQuiz.getQuestionText());
+
+            questionLBL.setText(currentQuiz.getQuestionText()); // Updates the question text.
+            question1LBL.setText(currentQuiz.getOptions().get(0)); // Updates option 1/6 .
             question2LBL.setText(currentQuiz.getOptions().get(1));
             question3LBL.setText(currentQuiz.getOptions().get(2));
             question4LBL.setText(currentQuiz.getOptions().get(3));
             question5LBL.setText(currentQuiz.getOptions().get(4));
             question6LBL.setText(currentQuiz.getOptions().get(5));
-            resetSelections();
-            startTimer();
+
+            resetSelections();  // Resets the selected answers.
+            startTimer(); // Starts the timer for the current question.
         } else {
             endQuiz();
         }
     }
-
+    // Resets the selected answers.
     private void resetSelections() {
         answerCB1.setSelected(false);
         answerCB2.setSelected(false);
         answerCB3.setSelected(false);
         answerCB4.setSelected(false);
         answerCB5.setSelected(false);
+        answerCB6.setSelected(false);
     }
-
+    
+    // Starts the timer for the current question.
     private void startTimer() {
-        if (timer != null) timer.stop();
-        timeRemaining = 10;
-        timerLBL.setText("Time: " + timeRemaining);
+        if (timer != null) {
+            timer.stop(); // Stops any existing timer.
+        }
 
-        timer = new Timer(1000, new ActionListener() {
+        timeRemaining = 20; // Resets the timer to 20 seconds.
+        timerLBL.setText("Time: " + timeRemaining);    // Updates the timer label.
+
+        timer = new Timer(1000, new ActionListener() { // Creates a new timer.
             @Override
+            
             public void actionPerformed(ActionEvent e) {
-                timeRemaining--;
-                timerLBL.setText("Time: " + timeRemaining);
-                if (timeRemaining <= 0) {
+                timeRemaining--;                              // Decreases the time remaining by 1 second.
+                timerLBL.setText("Time: " + timeRemaining);   // Updates the timer label.
+
+                if (timeRemaining <= 0) {                     // If the time runs out.
                     timer.stop();
-                    JOptionPane.showMessageDialog(null, "Time's up!");
-                    quizModule.moveToNextQuestion();
+                    JOptionPane.showMessageDialog(null, "Time's up!");   // Notifies the user.
+                    quizModule.moveToNextQuestion();     // Moves to the next question.
                     updateQuestion();
                 }
             }
         });
-        timer.start();
+        timer.start();  // Starts the timer.
     }
 
+    // Submits the selected answer and checks if it is correct.
     private void submitAnswer() {
-        if (!answerCB1.isSelected() && !answerCB2.isSelected() && !answerCB3.isSelected() && !answerCB4.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Please select an answer.");
-            return;
+        // Ensures an answer is selected before proceeding.
+        if (!answerCB1.isSelected() && !answerCB2.isSelected() && !answerCB3.isSelected() &&
+            !answerCB4.isSelected() && !answerCB5.isSelected() && !answerCB6.isSelected()) {
+            //   JOptionPane.showMessageDialog(this, "Please select an answer.");
+            return; // Do not proceed without an answer
         }
-        // >>>>Determine which answer is selected <<<<<
+
+        // Determine which answer is selected
         int selectedAnswer = answerCB1.isSelected() ? 0 :
                              answerCB2.isSelected() ? 1 :
-                             answerCB3.isSelected() ? 2 : 3;
+                             answerCB3.isSelected() ? 2 :
+                             answerCB4.isSelected() ? 3 :
+                             answerCB5.isSelected() ? 4 : 5;
 
+        // Check if the answer is correct
         boolean isCorrect = quizModule.checkAnswer(selectedAnswer);
-        JOptionPane.showMessageDialog(this, isCorrect ? "Correct!" : "Incorrect.");
+
+        // Increment the score only if correct
         if (isCorrect) {
-            quizModule.moveToNextQuestion();
+            quizModule.incrementScore();
         }
-        updateScore();          // Update the score
-        updateQuestion();       // Load the next question
+        // Provide feedback
+        JOptionPane.showMessageDialog(this, isCorrect ? "Correct!" : "Incorrect.");
+        // Update the score display
+        updateScore();
+        // Move to the next question if available
+        if (quizModule.hasNextQuestion()) {
+            quizModule.moveToNextQuestion();
+            updateQuestion(); // Load the next question
+        } else {
+            endQuiz(); // End the quiz if no more questions
+        }
+    }
+    
+    // Updates the displayed score.
+    private void updateScore() {
+        int score = quizModule.getScore(); // Fetch the current score
+        int totalQuestions = quizModule.getTotalQuestions(); // Fetch total questions from the module
+        scoreLBL.setText("Score: " + score + " / " + totalQuestions); // Display correct total
     }
 
-    private void updateScore() { ///Updates the score display
-        int score = quizModule.getCurrentQuestionIndex();
-        scoreLBL.setText("Score: " + score + " / " + quizModule.getAvailableQuizzes().size());
+    // Ends the quiz and displays the final score.
+    private void endQuiz() {
+        timer.stop();   // Stops the timer
+        int totalQuestions = quizModule.getTotalQuestions(); // Fetch the correct total
+        int score = quizModule.getScore(); // Gets the final score.
+        JOptionPane.showMessageDialog(this, "Quiz Finished! Your Score: " + score + " / " + totalQuestions); // Displays the final score.
+        System.out.println("Your Score: " + score + " / " + totalQuestions);   // Displays in Terminal the final score.
+        resetQuiz(); // Resets the quiz to its initial state.
     }
-
-    private void endQuiz() { ///Ends the quiz, stops the timer, and displays the final score
-        timer.stop();
-        JOptionPane.showMessageDialog(this, "Quiz Finished! " + scoreLBL.getText());
-        resetQuiz();
-    }
-        
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,190 +221,159 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        question6LBL = new javax.swing.JLabel();
-        question5LBL = new javax.swing.JLabel();
-        question2LBL = new javax.swing.JLabel();
-        question1LBL = new javax.swing.JLabel();
-        question4LBL = new javax.swing.JLabel();
-        question3LBL = new javax.swing.JLabel();
-        scoreLBL = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         quizTitleLBL = new javax.swing.JLabel();
-        timerLBL = new javax.swing.JLabel();
-        answerCB1 = new javax.swing.JCheckBox();
-        answerCB3 = new javax.swing.JCheckBox();
-        answerCB2 = new javax.swing.JCheckBox();
-        answerCB4 = new javax.swing.JCheckBox();
-        answerCB5 = new javax.swing.JCheckBox();
-        answerCB6 = new javax.swing.JCheckBox();
         exitBTN = new javax.swing.JToggleButton();
         startQuizBTN = new javax.swing.JToggleButton();
         submitAnswerBTN = new javax.swing.JToggleButton();
+        scoreLBL = new javax.swing.JLabel();
+        timerLBL = new javax.swing.JLabel();
+        question1LBL = new javax.swing.JLabel();
+        question2LBL = new javax.swing.JLabel();
+        question3LBL = new javax.swing.JLabel();
+        question4LBL = new javax.swing.JLabel();
+        question5LBL = new javax.swing.JLabel();
+        question6LBL = new javax.swing.JLabel();
+        answerCB1 = new javax.swing.JCheckBox();
+        answerCB2 = new javax.swing.JCheckBox();
+        answerCB3 = new javax.swing.JCheckBox();
+        answerCB4 = new javax.swing.JCheckBox();
+        answerCB5 = new javax.swing.JCheckBox();
+        answerCB6 = new javax.swing.JCheckBox();
         questionLBL = new javax.swing.JLabel();
+        whiteBackGroundLBL = new javax.swing.JLabel();
+        ImageLBL = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(840, 540));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        question6LBL.setText("Question 6 :");
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        question5LBL.setText("Question 5 :");
-
-        question2LBL.setText("Question 2 :");
-
-        question1LBL.setText("Question 1 :");
-
-        question4LBL.setText("Question 4 :");
-
-        question3LBL.setText("Question 3 :");
-
-        scoreLBL.setBackground(new java.awt.Color(255, 255, 255));
-
-        quizTitleLBL.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        quizTitleLBL.setBackground(new java.awt.Color(255, 255, 255));
+        quizTitleLBL.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
+        quizTitleLBL.setForeground(new java.awt.Color(255, 255, 255));
         quizTitleLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        quizTitleLBL.setText("Quiz Title");
+        quizTitleLBL.setText("Quiz Form");
+        jPanel1.add(quizTitleLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 160, 40));
 
-        answerCB1.setText("answer");
-
-        answerCB3.setText("answer");
-
-        answerCB2.setText("answer");
-
-        answerCB4.setText("answer");
-
-        answerCB5.setText("answer");
-        answerCB5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                answerCB5ActionPerformed(evt);
-            }
-        });
-
-        answerCB6.setText("answer");
-
+        exitBTN.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         exitBTN.setText("Exit");
         exitBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitBTNActionPerformed(evt);
             }
         });
+        jPanel1.add(exitBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 450, 90, 50));
 
+        startQuizBTN.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         startQuizBTN.setText("Start Quiz");
         startQuizBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startQuizBTNActionPerformed(evt);
             }
         });
+        jPanel1.add(startQuizBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 120, 50));
 
+        submitAnswerBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         submitAnswerBTN.setText("Submit Answer");
         submitAnswerBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitAnswerBTNActionPerformed(evt);
             }
         });
+        jPanel1.add(submitAnswerBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 140, 40));
 
+        scoreLBL.setBackground(new java.awt.Color(255, 255, 255));
+        scoreLBL.setText("Score");
+        jPanel1.add(scoreLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 100, 30));
+        jPanel1.add(timerLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 100, 30));
+
+        question1LBL.setText("Question 1 :");
+        jPanel1.add(question1LBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, -1));
+
+        question2LBL.setText("Question 2 :");
+        jPanel1.add(question2LBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 180, 20));
+
+        question3LBL.setText("Question 3 :");
+        jPanel1.add(question3LBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 180, 20));
+
+        question4LBL.setText("Question 4 :");
+        jPanel1.add(question4LBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 180, 20));
+
+        question5LBL.setText("Question 5 :");
+        jPanel1.add(question5LBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 180, 20));
+
+        question6LBL.setText("Question 6 :");
+        jPanel1.add(question6LBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 180, 20));
+
+        answerCB1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        answerCB1.setText("answer");
+        jPanel1.add(answerCB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, -1, -1));
+
+        answerCB2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        answerCB2.setText("answer");
+        jPanel1.add(answerCB2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, -1, 20));
+
+        answerCB3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        answerCB3.setText("answer");
+        jPanel1.add(answerCB3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, -1, 20));
+
+        answerCB4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        answerCB4.setText("answer");
+        jPanel1.add(answerCB4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 70, 20));
+
+        answerCB5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        answerCB5.setText("answer");
+        answerCB5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                answerCB5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(answerCB5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 70, -1));
+
+        answerCB6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        answerCB6.setText("answer");
+        jPanel1.add(answerCB6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 430, 70, 20));
+
+        questionLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         questionLBL.setText("Question");
+        jPanel1.add(questionLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 640, 30));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(questionLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(question1LBL)
-                                    .addComponent(question2LBL)
-                                    .addComponent(question3LBL))
-                                .addGap(56, 56, 56)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(answerCB1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(answerCB2)
-                                    .addComponent(answerCB3))
-                                .addGap(115, 115, 115)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(question5LBL)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(answerCB5))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(question4LBL)
-                                        .addGap(86, 86, 86)
-                                        .addComponent(answerCB4))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(question6LBL)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(exitBTN)
-                                            .addComponent(answerCB6)))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(startQuizBTN)))
-                .addGap(44, 44, 44)
-                .addComponent(timerLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(212, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(329, 329, 329)
-                        .addComponent(quizTitleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(submitAnswerBTN)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(scoreLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(433, 433, 433))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(quizTitleLBL)
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scoreLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(timerLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(startQuizBTN)
-                .addGap(29, 29, 29)
-                .addComponent(questionLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(question1LBL)
-                    .addComponent(answerCB1)
-                    .addComponent(question4LBL)
-                    .addComponent(answerCB4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(question2LBL)
-                    .addComponent(answerCB2)
-                    .addComponent(question5LBL)
-                    .addComponent(answerCB5))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(answerCB3)
-                    .addComponent(question3LBL)
-                    .addComponent(question6LBL)
-                    .addComponent(answerCB6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(submitAnswerBTN)
-                .addGap(18, 18, 18)
-                .addComponent(exitBTN)
-                .addGap(44, 44, 44))
-        );
+        whiteBackGroundLBL.setBackground(new java.awt.Color(255, 255, 255));
+        whiteBackGroundLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/WhiteBackGround.jpg"))); // NOI18N
+        jPanel1.add(whiteBackGroundLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 660, 320));
+
+        ImageLBL.setBackground(new java.awt.Color(255, 255, 255));
+        ImageLBL.setForeground(new java.awt.Color(255, 255, 255));
+        ImageLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/RegisterPageBackGround.jpg"))); // NOI18N
+        ImageLBL.setMaximumSize(new java.awt.Dimension(840, 540));
+        ImageLBL.setMinimumSize(new java.awt.Dimension(840, 540));
+        ImageLBL.setPreferredSize(new java.awt.Dimension(840, 540));
+        jPanel1.add(ImageLBL, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 530));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void startQuizBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startQuizBTNActionPerformed
         // TODO add your handling code here:
-                updateQuestion();
-                submitAnswerBTN.setEnabled(true);
-                startQuizBTN.setEnabled(false);
-            
-          
+    // Reset the quiz
+    quizModule.resetQuiz();
+
+    // Reset the displayed score
+    scoreLBL.setText("Score: 0 / " + quizModule.getAvailableQuizzes().size());
+
+    // Enable the Submit Answer button
+    submitAnswerBTN.setEnabled(true);
+
+    // Disable the Start Quiz button
+    startQuizBTN.setEnabled(false);
+
+    // Start with the first question
+    updateQuestion();
+
     }//GEN-LAST:event_startQuizBTNActionPerformed
 
     private void submitAnswerBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitAnswerBTNActionPerformed
@@ -401,6 +427,7 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ImageLBL;
     private javax.swing.JCheckBox answerCB1;
     private javax.swing.JCheckBox answerCB2;
     private javax.swing.JCheckBox answerCB3;
@@ -408,6 +435,7 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox answerCB5;
     private javax.swing.JCheckBox answerCB6;
     private javax.swing.JToggleButton exitBTN;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel question1LBL;
     private javax.swing.JLabel question2LBL;
     private javax.swing.JLabel question3LBL;
@@ -420,5 +448,6 @@ public class QuizzGUI extends javax.swing.JInternalFrame {
     private javax.swing.JToggleButton startQuizBTN;
     private javax.swing.JToggleButton submitAnswerBTN;
     private javax.swing.JLabel timerLBL;
+    private javax.swing.JLabel whiteBackGroundLBL;
     // End of variables declaration//GEN-END:variables
 }

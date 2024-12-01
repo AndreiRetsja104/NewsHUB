@@ -6,7 +6,7 @@ package NewsAndInformationHUB;
 
 /**
  * 
- * This class should work as counting the score for Quiz [ How many right quastions was answeard ]
+ * This class should work as counting the score for Quiz [ How many questions was answered ]
  * 
  * @author arets
  */
