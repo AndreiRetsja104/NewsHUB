@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 
@@ -24,7 +23,6 @@ import javax.swing.JOptionPane;
  */
 public class DonationGUI extends javax.swing.JInternalFrame {
     private String selectedNGO = ""; // Stores the selected NGO
-    private JList<String> ngoList; 
     private NGOList ngoListData; // The data list of NGOs
     private Donation donation; // Donation object for managing data
     
@@ -250,13 +248,27 @@ public class DonationGUI extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please choose an NGO first.\nThen press Button Confirm NGO"  , "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        // Get User name, phone ,email
-        String name = nameTF.getText();
-        String phone = phoneTF.getText();
-        String email = emailTF.getText();
-        float amount;
+
+    // Get User name, phone, email, and donation amount
+    String name = nameTF.getText();
+    String phone = phoneTF.getText();
+    String email = emailTF.getText();
+    String donationAmount = donationTF.getText();
+
+        // Validate email and donation amount
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter your email address.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (donationAmount.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a donation amount.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        float amount; // Use float for donation amount
         try {
-            amount = Float.parseFloat(donationTF.getText());  // Parse donation amount
+            amount = Float.parseFloat(donationAmount); // Parse donation amount
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid donation amount.", "Error", JOptionPane.ERROR_MESSAGE);
             return;

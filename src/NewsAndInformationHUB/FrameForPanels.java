@@ -24,7 +24,6 @@ public class FrameForPanels extends javax.swing.JFrame {
     private QuizzGUI quizGUI;
     private NewsFeedGUI newsFeedGUI;
     private DonationGUI donationGUI;
-    private MainPageImage mainPageImage;
     private CalculatorGUI calculatorGUI;
     private LoginPageGUI loginPageGUI; // Add LoginPageGUI
 
@@ -36,30 +35,45 @@ public class FrameForPanels extends javax.swing.JFrame {
         quizGUI = new QuizzGUI();
         newsFeedGUI = new NewsFeedGUI();
         donationGUI = new DonationGUI();
-        mainPageImage = new MainPageImage();
         calculatorGUI = new CalculatorGUI();
-        loginPageGUI = new LoginPageGUI(); // Initialize LoginPageGUI
+        loginPageGUI = new LoginPageGUI(this); // Initialize LoginPageGUI
 
         // Add frames to the desktop panel, setting them invisible initially
         desktopPanel.add(quizGUI);
         desktopPanel.add(newsFeedGUI);
         desktopPanel.add(donationGUI);
-        desktopPanel.add(mainPageImage);
         desktopPanel.add(calculatorGUI);
-        desktopPanel.add(loginPageGUI); // Add LoginPageGUI to desktop panel
+        desktopPanel.add(loginPageGUI); 
 
-        showLoginPage(); // Show LoginPageGUI initially
+        showInitialButtons();
+        hideAllFramesExcept(loginPageGUI); // Show LoginPageGUI initially
     }
 
     private void showLoginPage() {
         hideAllFramesExcept(loginPageGUI);
     }
 
+    public void showAllButtons() {
+        // Show all buttons after successful login
+        quizBtn.setVisible(true);
+        newsFeedBtn.setVisible(true);
+        donationBtn.setVisible(true);
+        calculatorBtn.setVisible(true);
+    
+    }
+    
+        private void showInitialButtons() {
+        // Initially, show only Profiles and Exit buttons
+        quizBtn.setVisible(false);
+        newsFeedBtn.setVisible(false);
+        donationBtn.setVisible(false);
+        calculatorBtn.setVisible(false);
+    }
+    
     private void hideAllFramesExcept(JInternalFrame frameToShow) {
         quizGUI.setVisible(false);
         newsFeedGUI.setVisible(false);
         donationGUI.setVisible(false);
-        mainPageImage.setVisible(false);
         calculatorGUI.setVisible(false);
         loginPageGUI.setVisible(false);
 

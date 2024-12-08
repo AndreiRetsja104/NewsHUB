@@ -166,12 +166,23 @@ public class CalculatorGUI extends javax.swing.JInternalFrame {
 
         day28LBL.setText("Day 28 :");
 
+        day1TF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                day1TFActionPerformed(evt);
+            }
+        });
+
         displayTA.setColumns(20);
         displayTA.setRows(5);
         jScrollPane2.setViewportView(displayTA);
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setText("Calculate");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         exitBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         exitBTN.setText("EXIT");
@@ -436,6 +447,14 @@ public class CalculatorGUI extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_exitBTNActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void day1TFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_day1TFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_day1TFActionPerformed
 
     /**
      * @param args the command line arguments

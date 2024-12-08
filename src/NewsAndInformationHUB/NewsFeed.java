@@ -14,7 +14,7 @@ import java.util.List;
  * @author arets
  */
 public class NewsFeed {
-    
+
     // Data for articles List
     // Arraylist of URLs for Articles 
     public List<Article> getLatestArticles() {
@@ -50,13 +50,13 @@ public class NewsFeed {
     }
     // data for research paper titles to the list.
     // This list in the progress,   
-    public List<String> getLatestResearch() {
-        List<String> research = new ArrayList<>();
-        research.add("Research Paper 1: AI in Healthcare");
-        research.add("Research Paper 2: Quantum Algorithms");
-        research.add("Research Paper 3: Sustainable Energy Solutions");
-        System.out.println("Displaying research: " + research);   // Debug statement
-        return research;
-    }
+//    public List<String> getLatestResearch() {
+//        List<String> research = new ArrayList<>();
+//        research.add("Research Paper 1: AI in Healthcare");
+//        research.add("Research Paper 2: Quantum Algorithms");
+//        research.add("Research Paper 3: Sustainable Energy Solutions");
+//        System.out.println("Displaying research: " + research);   // Debug statement
+//        return research;
+//    }
 
 }

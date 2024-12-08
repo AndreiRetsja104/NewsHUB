@@ -15,7 +15,6 @@ import javax.swing.JTabbedPane;
 
 public class NewsFeedGUI extends javax.swing.JInternalFrame {
     private JTabbedPane mainFrame;
-    private JList<String> articleJL; // Displaying articles
     private NewsFeed newsFeed;
 
     /**
@@ -144,7 +143,7 @@ public class NewsFeedGUI extends javax.swing.JInternalFrame {
         researchJL = new javax.swing.JList<>();
         articleListTab = new javax.swing.JTabbedPane();
         ScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        articleJL = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(840, 540));
@@ -163,7 +162,7 @@ public class NewsFeedGUI extends javax.swing.JInternalFrame {
 
         MainFrame.addTab("ResearchList", researchListTab);
 
-        ScrollPane3.setViewportView(jList1);
+        ScrollPane3.setViewportView(articleJL);
 
         articleListTab.addTab("tab1", ScrollPane3);
 
@@ -193,7 +192,7 @@ public class NewsFeedGUI extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
         );
 
         pack();
@@ -240,8 +239,8 @@ public class NewsFeedGUI extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane ScrollPane1;
     private javax.swing.JScrollPane ScrollPane2;
     private javax.swing.JScrollPane ScrollPane3;
+    private javax.swing.JList<String> articleJL;
     private javax.swing.JTabbedPane articleListTab;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JList<String> researchJL;
     private javax.swing.JTabbedPane researchListTab;

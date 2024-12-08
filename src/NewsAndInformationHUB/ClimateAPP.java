@@ -14,6 +14,7 @@ public class ClimateAPP {
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
+            System.out.println("Application started...");
             // Display the main application frame
             new FrameForPanels().setVisible(true);
         });

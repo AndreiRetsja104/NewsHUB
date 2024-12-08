@@ -16,6 +16,7 @@ import java.io.IOException;
  */
 public class LoginPageGUI extends javax.swing.JInternalFrame {
 
+    private FrameForPanels mainFrame;
     /**
      * Creates new form UserProfileFormGUI
      */
@@ -46,6 +47,8 @@ public class LoginPageGUI extends javax.swing.JInternalFrame {
         ImageLoginLBL = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setOpaque(true);
+        setPreferredSize(new java.awt.Dimension(840, 540));
 
         jPanel1.setToolTipText("");
         jPanel1.setPreferredSize(new java.awt.Dimension(840, 540));
@@ -137,36 +140,32 @@ public class LoginPageGUI extends javax.swing.JInternalFrame {
 
     private void enterBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBTNActionPerformed
         // TODO add your handling code here:
-      // Retrieve username and password from input fields
     String username = userTF.getText();
-    String password = new String(passwordTF.getText()); 
+    String password = passwordTF.getText();
 
-    System.out.println("Username: " + username); // For testing purposes only; remove in production
-
-    // Attempt to authenticate by reading the credentials file
     try (BufferedReader reader = new BufferedReader(new FileReader("user_credentials.txt"))) {
         String line;
         boolean isAuthenticated = false;
 
-        // Read each line in the credentials file
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
-            // Check if username and password match the input
             if (parts[0].equals(username) && parts[1].equals(password)) {
                 isAuthenticated = true;
                 break;
             }
         }
-        // Show appropriate message based on authentication result
+
         if (isAuthenticated) {
             JOptionPane.showMessageDialog(this, "Login successful!");
-            // Proceed to the next screen or main application window here if needed
+            mainFrame.showAllButtons(); // Show all buttons after successful login
+            userTF.setText(""); // Clear username field
+            passwordTF.setText(""); // Clear password field
         } else {
             JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.");
         }
     } catch (IOException e) {
         JOptionPane.showMessageDialog(this, "Error reading credentials file.");
-        e.printStackTrace(); // Optional: for debugging, remove in production
+        e.printStackTrace();
     }
     }//GEN-LAST:event_enterBTNActionPerformed
 
@@ -182,6 +181,12 @@ public class LoginPageGUI extends javax.swing.JInternalFrame {
     /**
      * @param args the command line arguments
      */
+    
+    public LoginPageGUI(FrameForPanels mainFrame) {
+    this.mainFrame = mainFrame; // Store reference to FrameForPanels
+    initComponents();
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
